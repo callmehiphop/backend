@@ -1,10 +1,12 @@
+// keep original xhr constructor
 var HTTPRequest = XMLHttpRequest;
 var mocks = {};
 
 
 
 /**
- *
+ * Returns new XHR Object, whatever the hell it may be!
+ * @return {object} XHR
  */
 var xhr = function() {
   if (HTTPRequest) {
@@ -17,10 +19,10 @@ var xhr = function() {
 
 
 /**
- *
+ * Creates a new fake XHR object
  */
 XMLHttpRequest = function() {
-
+  this.readyState = this.status = 0;
 };
 
 
@@ -43,7 +45,7 @@ extend(XMLHttpRequest.prototype, {
     var fakeXhr = this;
 
     this._xhr.onreadystatechange = function() {
-      extend(fakeXhr, this);
+      extend(fakeXhr, props(this));
 
       if (isFunction(fakeXhr.onreadystatechange)) {
         fakeXhr.onreadystatechange();
