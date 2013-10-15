@@ -23,7 +23,7 @@ var extend = function(target) {
     }
   });
 
-  return obj;
+  return target;
 };
 
 
