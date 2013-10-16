@@ -78,7 +78,7 @@ var props = function(obj, falseys) {
   var results = {};
 
   for (var i in obj) {
-    if (has(obj, i) && !isFunction(obj[i]) && (!falseys || obj[i])) {
+    if (!isFunction(obj[i]) && (!falseys || obj[i])) {
       results[i] = obj[i];
     }
   }
