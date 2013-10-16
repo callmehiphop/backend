@@ -110,7 +110,7 @@ var apply = function(obj, method, args, context) {
 var isType = function(type) {
   return function(thing) {
     return typeof thing === type;
-  }
+  };
 };
 
 
