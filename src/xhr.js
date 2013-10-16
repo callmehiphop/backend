@@ -1,6 +1,5 @@
 // keep original xhr constructor
 var HTTPRequest = XMLHttpRequest;
-var mocks = {};
 
 
 
