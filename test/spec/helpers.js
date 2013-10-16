@@ -153,6 +153,34 @@ describe('helper functions', function() {
       expect(result.wurt).to.be.undefined;
     });
 
+    it('should not grab any falsey values when second arg is set to true', function() {
+      var test = {
+        f: false,
+        n: null,
+        str: '',
+        num: 0,
+        pass: 'yay'  
+      };
+
+      // should pull falseys
+      var result = props(test);
+      expect(result.f).to.be.false;
+      expect(result.n).to.be.null;
+      expect(result.str).to.be.a('string');
+      expect(result.str).to.equal('');
+      expect(result.num).to.be.a('number');
+      expect(result.num).to.equal(0);
+      expect(result.pass).to.equal('yay');
+
+      // shouldn't pull falseys
+      result = props(test, true);
+      expect(result.f).to.be.undefined;
+      expect(result.n).to.be.undefined;
+      expect(result.str).to.be.undefined;
+      expect(result.num).to.be.undefined;
+      expect(result.pass).to.equal('yay');
+    });
+
   });
 
 
