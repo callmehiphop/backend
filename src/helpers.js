@@ -74,11 +74,11 @@ var pick = function(obj, keys) {
  * @param {object} obj
  * @return {object} results
  */
-var props = function(obj) {
+var props = function(obj, falseys) {
   var results = {};
 
   for (var i in obj) {
-    if (has(obj, i) && !isFunction(obj[i])) {
+    if (has(obj, i) && !isFunction(obj[i]) && (!falseys || obj[i])) {
       results[i] = obj[i];
     }
   }
@@ -115,8 +115,87 @@ var isType = function(type) {
 
 
 /**
+ * Retrieves ALL keys from a supplied object
+ * @param {object} obj
+ * @return {array} keys
+ */
+var keys = function(obj) {
+  var keys = [];
+
+  for (var key in obj) {
+    keys.push(key);
+  }
+
+  return keys;
+};
+
+
+/**
+ * Merges two arrays into one without disrupting
+ * the originals.
+ * @param {array} arr1
+ * @param {array} arr2
+ * @return {array} result
+ */
+var merge = function(arr1, arr2) {
+  var result = arr1.slice(0);
+
+  each(arr2, function(thing) {
+    if (!~result.indexOf(thing)) {
+      result.push(thing);
+    }
+  });
+
+  return result.sort();
+};
+
+
+/**
+ * Checks to see if two objects are the same, this is
+ * probably super lazy, but meh
+ * @param {object} a
+ * @param {object} b
+ * @return {boolean}
+ */
+var equals = function(a, b) {
+  if (a === b) {
+    return true;
+  }
+
+  var keys = merge(keys(a), keys(b));
+  var isEqual = true;
+
+  each(keys, function(key) {
+    if (a[key] !== b[key]) {
+      if ((!isObject(a[key]) && !isObject(b[key])) || !equals(a[key], b[key])) {
+        return isEqual = false;
+      }
+    }
+  });
+
+  return isEqual;
+};
+
+
+/**
  * Checks to see if supplied thing is of type function
  * @param {mixed} thing - hopefully a function
  * @return {boolean}
  */
 var isFunction = isType('function');
+
+
+/**
+ * Checks to see if supplied thing is of type object
+ * @param {mixed} thing - hopefully an object
+ * @return {boolean}
+ */
+var isObject = isType('object');
+
+
+/**
+ * Checks to see if the supplied thing is of type number
+ * @param {mixed} thing - hopefully a number
+ * @return {boolean}
+ */
+var isNumber = isType('number');
