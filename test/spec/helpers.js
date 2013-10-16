@@ -7,6 +7,7 @@ describe('helper functions', function() {
     };
 
     thing.prototype.nope = function() {};
+    thing.prototype.wurt = 'hi';
 
 
 
@@ -111,6 +112,7 @@ describe('helper functions', function() {
       expect(has(new thing, 'yep')).to.be.true;
       expect(has(new thing, 'maybe')).to.be.true;
       expect(has(new thing, 'nope')).to.be.false;
+      expect(has(new thing, 'wurt')).to.be.false;
       expect(has(new thing, 'what!')).to.be.false;
     });
 
@@ -148,11 +150,12 @@ describe('helper functions', function() {
       expect(result.yep).to.equal('value');
       expect(result.maybe).to.be.undefined;
       expect(result.nope).to.be.undefined;
-    })
+      expect(result.wurt).to.be.undefined;
+    });
 
   });
 
 
-  
+
 
 });
