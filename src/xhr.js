@@ -44,7 +44,7 @@ extend(XMLHttpRequest.prototype, {
     var fakeXhr = this;
 
     this._xhr.onreadystatechange = function() {
-      extend(fakeXhr, props(this));
+      extend(fakeXhr, props(this, true));
 
       if (isFunction(fakeXhr.onreadystatechange)) {
         fakeXhr.onreadystatechange();
