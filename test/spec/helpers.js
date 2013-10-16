@@ -145,12 +145,12 @@ describe('helper functions', function() {
 
   describe('props()', function() {
 
-    it('should only pull out own-property non-function values', function() {
+    it('should only pull out non-function values', function() {
       var result = props(new thing);
       expect(result.yep).to.equal('value');
       expect(result.maybe).to.be.undefined;
       expect(result.nope).to.be.undefined;
-      expect(result.wurt).to.be.undefined;
+      expect(result.wurt).to.equal('hi');
     });
 
     it('should not grab any falsey values when second arg is set to true', function() {
