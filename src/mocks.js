@@ -1,9 +1,7 @@
 var mocks = {};
 
-var on = function(method, url, data, headers) {
+// figure out chain sequence..
 
-};
-
-String.prototype.on = function(method, data, headers) {
-  return on(method, this, data, headers, callback);
-};
+// on('GET').to('/things/thing').using({ thing: 'poop' }).respond(200, { data: 'nope' });
+// when('GET', '/things/thing', { thing: 'poop' }).respond(200, { data: 'nope' });
+// '/things/thing'.on('get', { thing: 'poop' }).respond(200, { data: 'nope' });
