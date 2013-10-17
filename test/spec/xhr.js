@@ -1,14 +1,12 @@
 describe('Fake XHR', function() {
 
-  var xhr;
-
-
-  beforeEach(function() {
-    xhr = new XMLHttpRequest();
-  });
-
-
   describe('Using Fake XHR via Vanilla JavaScript', function() {
+
+    var xhr;
+
+    beforeEach(function() {
+      xhr = new XMLHttpRequest();
+    });
 
     it('should attempt to hit end point when mock does not exist', function() {
       var response;

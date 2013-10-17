@@ -102,19 +102,6 @@ var apply = function(obj, method, args, context) {
 
 
 /**
- * Generates a simple type check function using the
- * "typeof" operator
- * @param {string} type
- * @return {function} type checker
- */
-var isType = function(type) {
-  return function(thing) {
-    return typeof thing === type;
-  };
-};
-
-
-/**
  * Retrieves ALL keys from a supplied object
  * @param {object} obj
  * @return {array} keys
@@ -158,8 +145,8 @@ var merge = function(arr1, arr2) {
  * @return {boolean}
  */
 var equals = function(a, b) {
-  if (a === b) {
-    return true;
+  if (!isObject(a)) {
+    return a === b;
   }
 
   var props = merge(keys(a), keys(b));
@@ -174,6 +161,19 @@ var equals = function(a, b) {
   });
 
   return isEqual;
+};
+
+
+/**
+ * Generates a simple type check function using the
+ * "typeof" operator
+ * @param {string} type
+ * @return {function} type checker
+ */
+var isType = function(type) {
+  return function(thing) {
+    return typeof thing === type;
+  };
 };
 
 

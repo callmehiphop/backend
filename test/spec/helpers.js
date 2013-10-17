@@ -1,15 +1,13 @@
-describe('helper functions', function() {
+describe('Helper Functions', function() {
 
-    // setup..
-    var thing = function() {
-      this.yep = 'value';
-      this.maybe = function() {};
-    };
+  // setup..
+  var thing = function() {
+    this.yep = 'value';
+    this.maybe = function() {};
+  };
 
-    thing.prototype.nope = function() {};
-    thing.prototype.wurt = 'hi';
-
-
+  thing.prototype.nope = function() {};
+  thing.prototype.wurt = 'hi';
 
 
   // and away we go!
@@ -64,8 +62,6 @@ describe('helper functions', function() {
   });
 
 
-
-
   describe('extend()', function() {
 
     var target;
@@ -103,8 +99,6 @@ describe('helper functions', function() {
 
   });
 
-
-
   
   describe('has()', function() {
 
@@ -117,8 +111,6 @@ describe('helper functions', function() {
     });
 
   });
-
-
 
 
   describe('pick()', function() {
@@ -139,8 +131,6 @@ describe('helper functions', function() {
     });
 
   });
-
-
 
 
   describe('props()', function() {
@@ -184,6 +174,88 @@ describe('helper functions', function() {
   });
 
 
+  describe('#apply()', function() {
+
+    var context = {
+      doSomething: function() {
+        return {
+          context: this,
+          args: arguments
+        };
+      }  
+    };
+
+    it('should bind the first argument passed in as the context', function() {
+      expect(apply(context, 'doSomething').context).to.equal(context);
+    });
+
+  });
+
+
+  describe('#keys()', function() {
+
+    var Person = function(name, age) {
+      this.name = name;
+      this.age = age;
+    };
+
+    Person.prototype.greet = function() {
+      return 'Hello, my name is ' + this.name;
+    };
+
+    it('should return ALL keys of a given object', function() {
+      expect(keys(new Person('Dave', 27))).to.eql(['name', 'age', 'greet']);
+      expect(keys({ hello: 'goodbye' })).to.eql(['hello']);
+    });
+
+  });
+
+
+  describe('#merge()', function() {
+
+    var array1 = ['cat', 'brown', 7, 'toast'];
+    var array2 = ['dog', 'blue', 'toast', 9];
+
+    it('should sort and merge two arrays, ignoring duplicate values', function() {
+      expect(merge(array1, array2)).to.eql([7, 9, 'blue', 'brown', 'cat', 'dog', 'toast']);
+    });
+
+  });
+
+
+  describe('#equals()', function() {
+
+    it('should do a strict comparison of normal data types', function() {
+      expect(equals(2, 2)).to.be.true;
+      expect(equals(2, '2')).to.be.false;
+      expect(equals('hi', 'hi')).to.be.true;
+      expect(equals('hi', 'bye')).to.be.false;
+      expect(equals()).to.be.true; // undefined x 2
+      expect(equals(false, false)).to.be.true;
+      expect(equals(true, false)).to.be.false;
+    });
+
+    it('should do a comparison between two object', function() {
+      var a = { test: 'hi', test2: 'bye' };
+      var b = { test: 'hi', test2: 'bye' };
+    
+      expect(equals(a, b)).to.be.true;
+
+      b.test = 'nupe';
+      expect(equals(a, b)).to.be.false;
+    });
+
+    it('should do a deep comparison between two complex object', function() {
+      var a = { test: 'hi', test2: { test3: 'bye', test4: { test5: 'make it stop' } } };
+      var b = { test: 'hi', test2: { test3: 'bye', test4: { test5: 'make it stop' } } };
+
+      expect(equals(a, b)).to.be.true;
+
+      a.test2.test4.test5 = 'never!';
+      expect(equals(a, b)).to.be.false;
+    });
+
+  });
 
 
 });
