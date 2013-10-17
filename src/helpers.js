@@ -162,12 +162,12 @@ var equals = function(a, b) {
     return true;
   }
 
-  var keys = merge(keys(a), keys(b));
+  var props = merge(keys(a), keys(b));
   var isEqual = true;
 
-  each(keys, function(key) {
-    if (a[key] !== b[key]) {
-      if ((!isObject(a[key]) && !isObject(b[key])) || !equals(a[key], b[key])) {
+  each(props, function(prop) {
+    if (a[prop] !== b[prop]) {
+      if ((!isObject(a[prop]) && !isObject(b[prop])) || !equals(a[prop], b[prop])) {
         return isEqual = false;
       }
     }
