@@ -174,7 +174,7 @@ describe('Helper Functions', function() {
   });
 
 
-  describe('#apply()', function() {
+  describe('apply()', function() {
 
     var context = {
       doSomething: function() {
@@ -192,7 +192,7 @@ describe('Helper Functions', function() {
   });
 
 
-  describe('#keys()', function() {
+  describe('keys()', function() {
 
     var Person = function(name, age) {
       this.name = name;
@@ -211,7 +211,7 @@ describe('Helper Functions', function() {
   });
 
 
-  describe('#merge()', function() {
+  describe('merge()', function() {
 
     var array1 = ['cat', 'brown', 7, 'toast'];
     var array2 = ['dog', 'blue', 'toast', 9];
@@ -223,7 +223,7 @@ describe('Helper Functions', function() {
   });
 
 
-  describe('#equals()', function() {
+  describe('equals()', function() {
 
     it('should do a strict comparison of normal data types', function() {
       expect(equals(2, 2)).to.be.true;
