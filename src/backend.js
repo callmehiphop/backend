@@ -70,7 +70,7 @@ each(['get', 'delete', 'jsonp'], function(method) {
 
 /**
  * Creates convenience methods for PUT, POST and PATCH
- * backend.get('/my/thing', { u: 'jello', p: 'biafra' }, { header: 'aww-yeah' })
+ * backend.post('/my/thing', { u: 'jello', p: 'biafra' }, { header: 'aww-yeah' })
  * @param {string} url
  * @param {object} data
  * @param {object} headers
