@@ -42,7 +42,9 @@ backend.when = function(method, url, data, headers) {
  */
 var createResponse = function(status, data, headers) {
   return function() {
-    return isNumber(status) ? arguments : [200, status, data];
+    return isNumber(status) 
+      ? [status, data, headers] 
+      : [200, status, data];
   };
 };
 
