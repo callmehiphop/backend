@@ -39,7 +39,7 @@ $.getJSON('/users/stephenpluplus', function(response) {
   $('body').append('<p>Hello, ' + response.name + '</p>');
 });
 ```
-Looking for some alternative syntax? Well, it's your day, because backend.js is a rule breaker!
+Looking for some alternative syntax? Well, it's your day, because backend.js is a rule breaker! (shoutout to [stephenplusplus](https://github.com/stephenplusplus/)!)
 ```javascript
 '/users/:userid'.on('get')
   .respond({
