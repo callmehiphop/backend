@@ -5,6 +5,7 @@ describe('Fake XHR', function() {
     var xhr;
 
     beforeEach(function() {
+      mocks.length = 0;
       xhr = new XMLHttpRequest();
     });
 
@@ -21,6 +22,23 @@ describe('Fake XHR', function() {
       response = JSON.parse(response);
       expect(response).to.be.a('object');
       expect(response.test).to.equal('hi');
+    });
+
+    it('should serve up mock data when defined', function() {
+      var response;
+
+      '/things/:thing'.on('get').respond({ message: 'Toast rules!' });
+
+      xhr.onreadystatechange = function() {
+        response = this.response;
+      };
+      xhr.open('GET', '/things/toast', false);
+      xhr.send();
+
+      expect(response).to.be.a('string');
+      response = JSON.parse(response);
+      expect(response).to.be.a('object');
+      expect(response.message).to.equal('Toast rules!');
     });
 
   });
@@ -43,6 +61,15 @@ describe('Fake XHR', function() {
       $.getJSON('misc/data.json', function(response) {
         expect(response).to.be.a('object');
         expect(response.test).to.equal('hi');
+      });
+    });
+
+    it('should serve up mock data when defined', function() {
+      '/things/:thing'.on('get').respond({ message: 'Toast rules!' });
+
+      $.getJSON('/things/toast', function(response) {
+        expect(response).to.be.a('object');
+        expect(response.message).to.equal('Toast rules!');
       });
     });
 

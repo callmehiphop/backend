@@ -16,6 +16,7 @@ var xhr = function() {
 };
 
 
+
 /**
  * Creates a fake XHR request
  */
@@ -65,8 +66,12 @@ window.XMLHttpRequest = function() {
    * If not, attempt to make an actual request
    */
   this.send = function(params) {
-    var dParams = isString(params) ? deserialize(params) : params;
+    var dParams;
     var mock;
+
+    // jquery will set to null
+    params = params || undefined;
+    dParams = isString(params) ? deserialize(params) : params;
 
     each(mocks, function(mockedRequest) {
       if (mockedRequest.match(data.method, data.url, dParams, data.headers)) {

@@ -35,7 +35,7 @@ extend(Mock.prototype, {
   match: function(method, url, data, headers) {
     if (this.url.test(url)) {
       if (this.method === method.toUpperCase()) {
-        if (equals(this.headers, headers)) {
+        if (!this.headers || equals(this.headers, headers)) {
           if (equals(this.data, data)) {
             return true;
           }
