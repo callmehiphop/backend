@@ -23,10 +23,11 @@ module.exports = function(grunt) {
 
     concat: {
       options: {
+        separator: "\n\n\n\n",
         banner:
           "/*!\n" +
-          " * backend.js" +
-          " * v<%= pkg.version %> @callmehiphop <%= grunt.template.today('m/d/yy') %>\n" +
+          " * backend.js\n" +
+          " * v<%= pkg.version %> <%= grunt.template.today('m/d/yy') %>\n" +
           " * github.com/callmehiphop/backend.js\n" +
           " */\n"
       },
