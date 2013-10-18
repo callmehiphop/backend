@@ -3,7 +3,13 @@ backend.js
 
 > No API? No problem!
 
-Based on AngularJS's `$httpBackend`, backend.js allows you to mock API responses in the browser. Written in vanilla JavaScript, it has 0 dependancies, so you should be able to use it in combination with any library and/or framework.
+Based on AngularJS's `$httpBackend`, backend.js allows you to mock API responses in the browser. 
+Written in vanilla JavaScript, it has 0 dependancies, so you should be able to use it in combination with any library and/or framework.
+
+backend.js does not require any configurations, simply drop the script in and start mocking up some responses. 
+It works by hijacking the `XMLHttpRequest` constructor, allowing all requests to be intercepted and analyzed.
+If a request is made and a mocked response is found, backend.js simply serves up that response. 
+Alternatively, if no mocked response is found, then the real XHR object is called to allow your request to pass through.
 
 ### Examples
 To create a mocked response, simply access the `backend` object.
@@ -33,7 +39,7 @@ $.getJSON('/users/stephenpluplus', function(response) {
   $('body').append('<p>Hello, ' + response.name + '</p>');
 });
 ```
-Looking for some alternatively syntax? Well, it's your day, because backend.js is a rule breaker!
+Looking for some alternative syntax? Well, it's your day, because backend.js is a rule breaker!
 ```javascript
 '/users/:userid'.on('get')
   .respond({
