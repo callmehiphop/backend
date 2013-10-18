@@ -1,3 +1,7 @@
+//----------------------------------------------------
+//  XHR Hijack!
+//----------------------------------------------------
+
 // keep original xhr constructor
 var HttpRequest = window.XMLHttpRequest;
 
