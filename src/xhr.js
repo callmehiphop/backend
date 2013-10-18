@@ -18,7 +18,7 @@ var xhr = function() {
 
 
 /**
- * Creates a fake XHR request
+ * Creates a fake XHR
  */
 window.XMLHttpRequest = function() {
 
@@ -65,7 +65,7 @@ window.XMLHttpRequest = function() {
 
     /**
      * Checks to see if we have a Mock request in place for
-     * supplied information, if so, server up mocked response
+     * supplied information, if so, serve up mocked response
      * If not, attempt to make an actual request
      */
     send: function(params) {
