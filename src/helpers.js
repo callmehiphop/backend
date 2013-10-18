@@ -199,3 +199,36 @@ var isObject = isType('object');
  * @return {boolean}
  */
 var isNumber = isType('number');
+
+
+/**
+ * Turns a shallow object into serialized data
+ * @param {object} obj
+ * @return {string} results
+ */
+var serialize = function(obj) {
+  var results = '';
+
+  for (var i in obj) {
+    results += i + '=' + obj[i] + '&';
+  }
+
+  return results.slice(0, results.length -1);
+};
+
+
+/**
+ * Turns serialized data into a shallow object
+ * @param {string} str
+ * @return {object} results
+ */
+var deserialize = function(str) {
+  var results = {};
+
+  str.replace(
+    new RegExp('[^?=&]+)(=[^&]*))?', 'g'),
+    function($0, $1, $2, $3) { results[$1] = $3; }
+  );
+
+  return results;
+};
