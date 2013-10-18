@@ -11,11 +11,11 @@ describe('Fake XHR', function() {
 
     it('should attempt to hit end point when mock does not exist', function() {
       var response;
-      
+
       xhr.onreadystatechange = function() {
         response = this.response;
       };
-      xhr.open('GET', 'misc/data.json', false);
+      xhr.open('GET', 'fixtures/data.json', false);
       xhr.send();
 
       expect(response).to.be.a('string');
@@ -53,18 +53,18 @@ describe('Fake XHR', function() {
       $.ajax({
         async: false,
         dataType: 'json',
-        url: 'misc/data.json'
+        url: 'fixtures/data.json'
       }).done(function(response) {
         expect(response).to.be.a('object');
         expect(response.test).to.equal('hi');
       });
 
       // asynchronous request
-      $.getJSON('misc/data.json', function(response) {
+      $.getJSON('fixtures/data.json', function(response) {
         expect(response).to.be.a('object');
         expect(response.test).to.equal('hi');
       });
-      
+
     });
 
     it('should serve up mock data when defined', function() {
