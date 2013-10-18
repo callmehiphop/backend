@@ -16,6 +16,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-mocha');
 
 
   grunt.initConfig({
@@ -40,12 +42,26 @@ module.exports = function(grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      all: [
-        'Gruntfile.js',
-        'backend.js'
-      ]
+      src: {
+        options: {
+          strict: false
+        },
+        files: {
+          src: [
+            'src/!(open|close).js'
+          ]
+        }
+      },
+      build: 'backend.js'
     },
 
+    mocha: {
+      all: 'test/index.html',
+      options: {
+        run: true,
+        log: true
+      }
+    },
 
     uglify: {
       options: {
@@ -57,15 +73,27 @@ module.exports = function(grunt) {
         src: 'backend.js',
         dest: 'backend.min.js'
       }
+    },
+
+    watch: {
+      all: {
+        files: [
+          'src/*.js',
+          'test/spec/*.js'
+        ],
+        tasks: ['jshint:src', 'mocha']
+      }
     }
 
   });
 
 
   grunt.registerTask('build', [
+    'jshint:src',
+    'mocha',
     'concat:build',
-    'jshint',
-    'uglify:build'
+    'uglify:build',
+    'jshint:build'
   ]);
 
   grunt.registerTask('default', ['build']);
