@@ -70,8 +70,10 @@ var pick = function(obj, keys) {
 
 
 /**
- * Grabs all properties of an object
+ * Grabs all properties of an object, unless falseys is
+ * set to true, in which case it only grabs truthy values
  * @param {object} obj
+ * @param {boolean} falseys
  * @return {object} results
  */
 var props = function(obj, falseys) {
@@ -167,7 +169,7 @@ var equals = function(a, b) {
 
 /**
  * Kinda like equal, except it checks to see that b
- * implements all of a, but a could potentially have extras
+ * implements all of a, but a can have more than b
  * @param {object} a
  * @param {object} b
  * @return {boolean}
