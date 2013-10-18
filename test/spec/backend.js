@@ -27,13 +27,13 @@ describe('Backend API', function() {
 
     it('should store a response after calling #respond()', function() {
       backend.when('GET', '/things').respond(404, response, 'hi');
-      expect(mocks[0].response).to.be.an.instanceof(Function);
-      expect(mocks[0].response()).to.eql([404, response, 'hi']);
+      expect(mocks[0].response).to.be.a('object');
+      expect(mocks[0].response).to.eql({ status: 404, data: response, headers: 'hi'});
     });
 
     it('should add a 200 status when no status is set', function() {
       backend.when('GET', '/things').respond(response, 'hi');
-      expect(mocks[0].response()).to.eql([200, response, 'hi']);
+      expect(mocks[0].response).to.eql({ status: 200, data: response, headers: 'hi'});
     });
 
   });

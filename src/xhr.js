@@ -28,134 +28,141 @@ window.XMLHttpRequest = function() {
   var realXhr;
 
   
-  // fake event listeners
-  this.onabort = null;
-  this.onerror = null;
-  this.onload = null;
-  this.onloadend = null;
-  this.onloadstart = null
-  this.onprogress = null;
-  this.onreadystatechange = null;
+  extend(this, {
 
-  // fake properties
-  this.readyState = 0;
-  this.response = '';
-  this.responseText = '';
-  this.responseType = '';
-  this.responseXML = null;
-  this.status = 0;
-  this.statusText = '';
-  this.withCredentials = false;
+    // fake event listeners
+    onabort: null,
+    onerror: null,
+    onload: null,
+    onloadend: null,
+    onloadstart: null,
+    onprogress: null,
+    onreadystatechange: null,
 
-
-  /**
-   * Stores all request information within data object
-   */
-  this.open = function(method, url, async, username, password) {
-    data.method = method;
-    data.url = url;
-    data.async = async;
-    data.username = username;
-    data.password = password;
-  };
+    // fake properties
+    readyState: 0,
+    response: '',
+    responseText: '',
+    responseType: '',
+    responseXML: null,
+    status: 0,
+    statusText: '',
+    withCredentials: false,
+  
 
 
-  /**
-   * Checks to see if we have a Mock request in place for
-   * supplied information, if so, server up mocked response
-   * If not, attempt to make an actual request
-   */
-  this.send = function(params) {
-    var dParams;
-    var mock;
+    /**
+     * Stores all request information within data object
+     */
+    open: function(method, url, async, username, password) {
+      data.method = method;
+      data.url = url;
+      data.async = async;
+      data.username = username;
+      data.password = password;
+    },
 
-    // jquery will set to null
-    params = params || undefined;
-    dParams = isString(params) ? deserialize(params) : params;
 
-    each(mocks, function(mockedRequest) {
-      if (mockedRequest.match(data.method, data.url, dParams, data.headers)) {
-        mock = mockedRequest;
-        return false;
-      }
-    });
+    /**
+     * Checks to see if we have a Mock request in place for
+     * supplied information, if so, server up mocked response
+     * If not, attempt to make an actual request
+     */
+    send: function(params) {
+      var dParams;
+      var mock;
 
-    if (mock) {
-      var response = mock.response();
-      var responseText = response[1];
+      // jquery will set to null
+      params = params || undefined;
+      dParams = isString(params) ? deserialize(params) : params;
 
-      if (isObject(responseText)) {
-        responseText = JSON.stringify(responseText);
-      }
-
-      // set properties to simulate success
-      extend(this, {
-        readyState: 4,
-        status: response[0],
-        response: responseText,
-        responseText: responseText
+      // try and find a matching mock object
+      each(mocks, function(mockedRequest) {
+        if (mockedRequest.match(data.method, data.url, dParams, data.headers)) {
+          mock = mockedRequest;
+          return false;
+        }
       });
 
-      responseHeaders = response[2] || {};
+      // if we found one, lets serve it up!
+      if (mock) {
+        var responseText = mock.response.data;
 
-      if (isFunction(this.onreadystatechange)) {
-        this.onreadystatechange();
-      }
-    } else {
-      var fakeXhr = this;
-
-      realXhr = xhr();
-      realXhr.open(data.method, data.url, data.async, data.username, data.password);
-
-      realXhr.onreadystatechange = function() {
-        extend(fakeXhr, props(this, true));
-
-        if (isFunction(fakeXhr.onreadystatechange)) {
-          fakeXhr.onreadystatechange();
+        if (isObject(responseText)) {
+          responseText = JSON.stringify(responseText);
         }
-      };
 
-      each(keys(data.headers), function(key) {
-        this.setRequestHeader(key, data.headers[key]);
-      }, realXhr);
+        // set properties to simulate success
+        extend(this, {
+          readyState: 4,
+          status: mock.response.status,
+          response: responseText,
+          responseText: responseText
+        });
 
-      realXhr.send(params);
+        responseHeaders = mock.response.headers || {};
+
+        if (isFunction(this.onreadystatechange)) {
+          this.onreadystatechange();
+        }
+      // if not, let's make a real request
+      } else {
+        var fakeXhr = this;
+
+        realXhr = xhr();
+        realXhr.open(data.method, data.url, data.async, data.username, data.password);
+
+        realXhr.onreadystatechange = function() {
+          extend(fakeXhr, props(this, true));
+
+          if (isFunction(fakeXhr.onreadystatechange)) {
+            fakeXhr.onreadystatechange();
+          }
+        };
+
+        each(keys(data.headers), function(key) {
+          this.setRequestHeader(key, data.headers[key]);
+        }, realXhr);
+
+        realXhr.send(params);
+      }
+    },
+
+
+    /**
+     * Stores request headers in data object, in the event that
+     * an actual HTTP request needs to be made, we'll call setRequestHeader
+     * on the actual XHR object
+     */
+    setRequestHeader: function(key, value) {
+      data.headers[key] = value;
+    },
+
+
+    /**
+     * Attempts to retrieve response header
+     */
+    getResponseHeader: function(key) {
+      return realXhr ? realXhr.getResponseHeader(key) : responseHeaders[key];
+    },
+
+
+    /**
+     * Attempts to retrieve response headers
+     */
+    getAllResponseHeaders: function() {
+      return realXhr ? realXhr.getAllResponseHeaders() : serialize(responseHeaders);
+    },
+
+
+    /**
+     * Checks to see if we made a real XHR request and if so, abort it
+     */
+    abort: function() {
+      realXhr && realXhr.abort();
     }
-  };
 
-
-  /**
-   * Stores request headers in data object, in the event that
-   * an actual HTTP request needs to be made, we'll call setRequestHeader
-   * on the actual XHR object
-   */
-  this.setRequestHeader = function(key, value) {
-    data.headers[key] = value;
-  };
-
-
-  /**
-   * Attempts to retrieve response header
-   */
-  this.getResponseHeader = function(key) {
-    return realXhr ? realXhr.getResponseHeader(key) : responseHeaders[key];
-  };
-
-
-  /**
-   * Attempts to retrieve response headers
-   */
-  this.getAllResponseHeaders = function() {
-    return realXhr ? realXhr.getAllResponseHeaders() : serialize(responseHeaders);
-  };
-
-
-  /**
-   * Checks to see if we made a real XHR request and if so, abort it
-   */
-  this.abort = function() {
-    realXhr && realXhr.abort();
-  };
+  });
 
 
 };
