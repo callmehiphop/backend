@@ -21,6 +21,7 @@
     "node_modules",
     "src",
     "test",
+    "backend.js.map",
     "backend.min.js",
     "Gruntfile.js",
     "package.json",
