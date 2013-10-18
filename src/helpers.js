@@ -202,6 +202,14 @@ var isNumber = isType('number');
 
 
 /**
+ * Checks to see if the supplied thing is of type string
+ * @param {mixed} thing - hopefully a string
+ * @return {boolean}
+ */
+var isString = isType('string');
+
+
+/**
  * Turns a shallow object into serialized data
  * @param {object} obj
  * @return {string} results
