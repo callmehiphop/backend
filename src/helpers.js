@@ -240,7 +240,7 @@ var serialize = function(obj) {
     results += i + '=' + obj[i] + '&';
   }
 
-  return results.slice(0, results.length -1);
+  return results.slice(0, -1);
 };
 
 
