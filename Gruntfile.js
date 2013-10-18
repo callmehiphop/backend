@@ -26,8 +26,7 @@ module.exports = function(grunt) {
         separator: "\n\n\n\n",
         banner:
           "/*!\n" +
-          " * backend.js\n" +
-          " * v<%= pkg.version %> <%= grunt.template.today('m/d/yy') %>\n" +
+          " * backend.js - v<%= pkg.version %>\n" +
           " * github.com/callmehiphop/backend.js\n" +
           " */\n"
       },
