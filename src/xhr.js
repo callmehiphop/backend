@@ -91,7 +91,7 @@ window.XMLHttpRequest = function() {
         responseText: responseText
       });
 
-      responseHeaders = response[2];
+      responseHeaders = response[2] || {};
 
       if (isFunction(this.onreadystatechange)) {
         this.onreadystatechange();
