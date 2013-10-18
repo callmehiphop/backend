@@ -89,8 +89,10 @@ var pick = function(obj, keys) {
 
 
 /**
- * Grabs all properties of an object
+ * Grabs all properties of an object, unless falseys is
+ * set to true, in which case it only grabs truthy values
  * @param {object} obj
+ * @param {boolean} falseys
  * @return {object} results
  */
 var props = function(obj, falseys) {
@@ -186,7 +188,7 @@ var equals = function(a, b) {
 
 /**
  * Kinda like equal, except it checks to see that b
- * implements all of a, but a could potentially have extras
+ * implements all of a, but a can have more than b
  * @param {object} a
  * @param {object} b
  * @return {boolean}
@@ -294,8 +296,8 @@ var mocks = [];
  * for supplied request information
  * @param {string} method
  * @param {string|regexp} url
- * @param {data} object (optional)
- * @param {headers} object (optional)
+ * @param {object} data (optional)
+ * @param {object} headers (optional)
  */
 var Mock = function(method, url, data, headers) {
   this.method = method.toUpperCase();
@@ -366,6 +368,11 @@ var routeToRegExp = function(route) {
 
 
 
+
+//----------------------------------------------------
+//  XHR Hijack!
+//----------------------------------------------------
+
 // keep original xhr constructor
 var HttpRequest = window.XMLHttpRequest;
 
@@ -386,7 +393,7 @@ var xhr = function() {
 
 
 /**
- * Creates a fake XHR request
+ * Creates a fake XHR
  */
 window.XMLHttpRequest = function() {
 
@@ -433,7 +440,7 @@ window.XMLHttpRequest = function() {
 
     /**
      * Checks to see if we have a Mock request in place for
-     * supplied information, if so, server up mocked response
+     * supplied information, if so, serve up mocked response
      * If not, attempt to make an actual request
      */
     send: function(params) {
@@ -536,6 +543,7 @@ window.XMLHttpRequest = function() {
 
 
 };
+
 
 
 
