@@ -4,12 +4,12 @@ describe('Backend API', function() {
   var response = { data: 'hi' };
 
 
-  beforeEach(function() {
-    mocks.length = 0;
-  });
+  beforeEach(resetMocks);
 
 
   describe('#when()', function() {
+
+    beforeEach(resetMocks);
 
     it('should create a new mock object when called', function() {
       backend.when('GET', '/things').respond(response);
@@ -41,6 +41,8 @@ describe('Backend API', function() {
 
   describe('#get()', function() {
 
+    beforeEach(resetMocks);
+
     it('should create a new mock object when called', function() {
       backend.get('/things').respond(response);
       expect(mocks.length).to.equal(1);
@@ -55,6 +57,8 @@ describe('Backend API', function() {
 
 
   describe('#post()', function() {
+
+    beforeEach(resetMocks);
 
     it('should create a new mock object when called', function() {
       backend.post('/things').respond(response);
@@ -71,6 +75,8 @@ describe('Backend API', function() {
 
   describe('#put()', function() {
 
+    beforeEach(resetMocks);
+
     it('should create a new mock object when called', function() {
       backend.put('/things').respond(response);
       expect(mocks.length).to.equal(1);
@@ -85,6 +91,8 @@ describe('Backend API', function() {
 
 
   describe('#delete()', function() {
+
+    beforeEach(resetMocks);
 
     it('should create a new mock object when called', function() {
       backend.delete('/things').respond(response);
@@ -101,6 +109,8 @@ describe('Backend API', function() {
 
   describe('#patch()', function() {
 
+    beforeEach(resetMocks);
+
     it('should create a new mock object when called', function() {
       backend.patch('/things').respond(response);
       expect(mocks.length).to.equal(1);
@@ -116,6 +126,8 @@ describe('Backend API', function() {
 
   describe('#jsonp()', function() {
 
+    beforeEach(resetMocks);
+
     it('should create a new mock object when called', function() {
       backend.jsonp('/things').respond(response);
       expect(mocks.length).to.equal(1);
@@ -130,6 +142,8 @@ describe('Backend API', function() {
 
 
   describe('#on()', function() {
+
+    beforeEach(resetMocks);
 
     it('should create a new mock object when called', function() {
       '/things'.on('get').respond(response);

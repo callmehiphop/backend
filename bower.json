@@ -1,0 +1,29 @@
+{
+  "name": "backend.js",
+  "main": "backend.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/callmehiphop/backend.js",
+  "authors": [
+    "Dave Gramlich <callmehiphop@gmail.com>"
+  ],
+  "description": "No API? No problem!",
+  "keywords": [
+    "backend",
+    "stub",
+    "mock",
+    "ajax",
+    "xhr",
+    "$httpBackend"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src",
+    "test",
+    "backend.min.js",
+    "Gruntfile.js",
+    "package.json",
+    "README.md"
+  ]
+}

@@ -58,7 +58,7 @@ var has = function(obj, key) {
  */
 var pick = function(obj, keys) {
   var results = {};
-  
+
   each(keys, function(key) {
     if (has(obj, key)) {
       results[key] = obj[key];
