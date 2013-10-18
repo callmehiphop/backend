@@ -155,7 +155,8 @@ var equals = function(a, b) {
   each(props, function(prop) {
     if (a[prop] !== b[prop]) {
       if ((!isObject(a[prop]) && !isObject(b[prop])) || !equals(a[prop], b[prop])) {
-        return isEqual = false;
+        isEqual = false;
+        return false;
       }
     }
   });

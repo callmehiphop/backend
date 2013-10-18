@@ -159,7 +159,9 @@ window.XMLHttpRequest = function() {
      * Checks to see if we made a real XHR request and if so, abort it
      */
     abort: function() {
-      realXhr && realXhr.abort();
+      if (realXhr) {
+        realXhr.abort();
+      }
     }
 
   });
