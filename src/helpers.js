@@ -165,6 +165,24 @@ var equals = function(a, b) {
 
 
 /**
+ * Kinda like equal, except it checks to see that b
+ * implements all of a, but a could potentially have extras
+ * @param {object} a
+ * @param {object} b
+ * @return {boolean}
+ */
+var contains = function(a, b) {
+  for (var i in b) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+
+/**
  * Generates a simple type check function using the
  * "typeof" operator
  * @param {string} type
@@ -234,7 +252,7 @@ var deserialize = function(str) {
   var results = {};
 
   str.replace(
-    new RegExp('[^?=&]+)(=[^&]*))?', 'g'),
+    new RegExp('([^?=&]+)(=([^&]*))?', 'g'),
     function($0, $1, $2, $3) { results[$1] = $3; }
   );
 

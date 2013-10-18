@@ -35,7 +35,8 @@ extend(Mock.prototype, {
   match: function(method, url, data, headers) {
     if (this.url.test(url)) {
       if (this.method === method.toUpperCase()) {
-        if (!this.headers || equals(this.headers, headers)) {
+        // can't do equals(), as jQuery will add extra headers
+        if (!this.headers || contains(headers, this.headers)) {
           if (equals(this.data, data)) {
             return true;
           }

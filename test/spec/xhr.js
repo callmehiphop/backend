@@ -47,6 +47,8 @@ describe('Fake XHR', function() {
   describe('Using Fake XHR via jQuery', function() {
 
     it('should attempt to hit end point when mock does not exist', function() {
+      var data;
+
       // synchronous request
       $.ajax({
         async: false,
@@ -62,14 +64,40 @@ describe('Fake XHR', function() {
         expect(response).to.be.a('object');
         expect(response.test).to.equal('hi');
       });
+      
     });
 
     it('should serve up mock data when defined', function() {
+      var data;
+
       '/things/:thing'.on('get').respond({ message: 'Toast rules!' });
 
       $.getJSON('/things/toast', function(response) {
         expect(response).to.be.a('object');
         expect(response.message).to.equal('Toast rules!');
+      });
+
+      '/things/:thing'.on('post', { key: 'value' }).respond({ yee: 'haw' });
+
+      $.post('/things/cowboy', { key: 'value' }, function(response) {
+        expect(response).to.be.a('string');
+        response = JSON.parse(response);
+        expect(response).to.be.a('object');
+        expect(response.yee).to.equal('haw');
+      });
+
+      '/things/:thing'.on('delete', { id: 'Bob' }, { 'x-auth-token': 'awwwyeah' })
+        .respond({ message: 'What\'s the matter with Bob?' });
+
+      $.ajax({
+        method: 'DELETE',
+        dataType: 'json',
+        url: '/things/users',
+        data: { id: 'Bob' },
+        headers: { 'x-auth-token': 'awwwyeah' }
+      }).done(function(response) {
+        expect(response).to.be.a('object');
+        expect(response.message).to.equal('What\'s the matter with Bob?');
       });
     });
 
