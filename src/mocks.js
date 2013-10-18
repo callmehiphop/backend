@@ -10,8 +10,8 @@ var mocks = [];
  * for supplied request information
  * @param {string} method
  * @param {string|regexp} url
- * @param {data} object (optional)
- * @param {headers} object (optional)
+ * @param {object} data (optional)
+ * @param {object} headers (optional)
  */
 var Mock = function(method, url, data, headers) {
   this.method = method.toUpperCase();
