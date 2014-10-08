@@ -3,7 +3,7 @@
 //----------------------------------------------------
 
 // keep original xhr constructor
-var HttpRequest = window.XMLHttpRequest;
+var HttpRequest = root.XMLHttpRequest;
 
 
 
@@ -14,7 +14,7 @@ var HttpRequest = window.XMLHttpRequest;
 var xhr = function() {
   if (HttpRequest) {
     return new HttpRequest();
-  } else if (window.ActiveXObject) {
+  } else if (root.ActiveXObject) {
     return new ActiveXObject('Microsoft.XMLHTTP');
   }
 };
@@ -24,14 +24,14 @@ var xhr = function() {
 /**
  * Creates a fake XHR
  */
-window.XMLHttpRequest = function() {
+root.XMLHttpRequest = function() {
 
   // request data goes here
   var data = { headers: {} };
   var responseHeaders;
   var realXhr;
 
-  
+
   extend(this, {
 
     // fake event listeners
@@ -52,7 +52,7 @@ window.XMLHttpRequest = function() {
     status: 0,
     statusText: '',
     withCredentials: false,
-  
+
 
 
     /**

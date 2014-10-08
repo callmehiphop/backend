@@ -11,3 +11,6 @@
 }(this, function(undefined) {
 
 'use strict';
+
+var root = typeof window !== 'undefined' ? window :
+  typeof self !== 'undefined' ? self : this;

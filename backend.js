@@ -16,6 +16,9 @@
 
 'use strict';
 
+var root = typeof window !== 'undefined' ? window :
+  typeof self !== 'undefined' ? self : this;
+
 
 
 
@@ -376,7 +379,7 @@ var routeToRegExp = function(route) {
 //----------------------------------------------------
 
 // keep original xhr constructor
-var HttpRequest = window.XMLHttpRequest;
+var HttpRequest = root.XMLHttpRequest;
 
 
 
@@ -387,7 +390,7 @@ var HttpRequest = window.XMLHttpRequest;
 var xhr = function() {
   if (HttpRequest) {
     return new HttpRequest();
-  } else if (window.ActiveXObject) {
+  } else if (root.ActiveXObject) {
     return new ActiveXObject('Microsoft.XMLHTTP');
   }
 };
@@ -397,14 +400,14 @@ var xhr = function() {
 /**
  * Creates a fake XHR
  */
-window.XMLHttpRequest = function() {
+root.XMLHttpRequest = function() {
 
   // request data goes here
   var data = { headers: {} };
   var responseHeaders;
   var realXhr;
 
-  
+
   extend(this, {
 
     // fake event listeners
@@ -425,7 +428,7 @@ window.XMLHttpRequest = function() {
     status: 0,
     statusText: '',
     withCredentials: false,
-  
+
 
 
     /**
@@ -569,7 +572,7 @@ backend.when = function(method, url, data, headers) {
   mocks.push(mock);
 
   return {
-    
+
     /**
      * Assigns a response to the current mock
      * @param {number} status (optional)
@@ -581,6 +584,13 @@ backend.when = function(method, url, data, headers) {
     }
 
   };
+};
+
+/**
+ * clears out stubs
+ */
+backend.clear = function () {
+  mocks.length = 0;
 };
 
 

@@ -18,7 +18,7 @@ backend.when = function(method, url, data, headers) {
   mocks.push(mock);
 
   return {
-    
+
     /**
      * Assigns a response to the current mock
      * @param {number} status (optional)
@@ -30,6 +30,13 @@ backend.when = function(method, url, data, headers) {
     }
 
   };
+};
+
+/**
+ * clears out stubs
+ */
+backend.clear = function () {
+  mocks.length = 0;
 };
 
 
