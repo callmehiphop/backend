@@ -1,7 +1,7 @@
 {
   "name": "backend.js",
   "main": "backend.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/callmehiphop/backend.js",
   "authors": [
     "Dave Gramlich <callmehiphop@gmail.com>"

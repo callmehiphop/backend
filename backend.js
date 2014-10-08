@@ -1,5 +1,5 @@
 /*!
- * backend.js - v0.0.1
+ * backend.js - v0.0.2
  * github.com/callmehiphop/backend.js
  */
 (function(root, factory) {
@@ -7,6 +7,8 @@
 
   if (typeof define === 'function' && define.amd) {
     define(factory);
+  } else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = factory();
   } else {
     root.backend = factory();
   }

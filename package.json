@@ -1,7 +1,8 @@
 {
   "name": "backend.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Dave Gramlich",
+  "main": "backend.js",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.1.3",
