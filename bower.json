@@ -1,5 +1,7 @@
 {
-  "name": "http-backend",
+  "name": "backend",
   "version": "0.1.0",
-  "main": "backend.js"
+  "devDependencies": {
+    "jquery": "~2.1.1"
+  }
 }

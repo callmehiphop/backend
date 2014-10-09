@@ -1,11 +1,31 @@
 {
-  "name": "http-backend",
+  "name": "backend",
   "version": "0.1.0",
-  "main": "index.js",
-  "browser": "backend.js",
   "devDependencies": {
     "gulp": "^3.8.8",
     "browserify": "^6.0.3",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-source-stream": "^1.0.0",
+    "karma": "^0.12.24",
+    "mocha": "^1.21.4",
+    "karma-mocha": "^0.1.9",
+    "chai": "^1.9.2",
+    "karma-chai": "^0.1.0",
+    "karma-bro": "^0.8.0",
+    "brfs": "^1.2.0",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-spec-reporter": "0.0.13"
+  },
+  "dependencies": {
+    "lodash.foreach": "^2.4.1",
+    "lodash.map": "^2.4.1",
+    "lodash.isundefined": "^2.4.1",
+    "lodash.assign": "^2.4.1",
+    "lodash.pick": "^2.4.1",
+    "lodash.has": "^2.4.1",
+    "lodash.bind": "^2.4.1",
+    "lodash.isobject": "^2.4.1",
+    "lodash.noop": "^2.4.1",
+    "lodash.contains": "^2.4.1",
+    "lodash.isequal": "^2.4.1"
   }
 }
