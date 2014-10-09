@@ -16,18 +16,5 @@
     "karma-spec-reporter": "0.0.13",
     "gulp-jshint": "^1.8.5",
     "jshint-stylish": "^1.0.0"
-  },
-  "dependencies": {
-    "lodash.foreach": "^2.4.1",
-    "lodash.map": "^2.4.1",
-    "lodash.isundefined": "^2.4.1",
-    "lodash.assign": "^2.4.1",
-    "lodash.pick": "^2.4.1",
-    "lodash.has": "^2.4.1",
-    "lodash.bind": "^2.4.1",
-    "lodash.isobject": "^2.4.1",
-    "lodash.noop": "^2.4.1",
-    "lodash.contains": "^2.4.1",
-    "lodash.isequal": "^2.4.1"
   }
 }
