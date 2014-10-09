@@ -1,55 +1,64 @@
-backend.js
-==========
+# backend.js
 
 > No API? No problem!
 
-Based on AngularJS's `$httpBackend`, backend.js allows you to mock API responses in the browser. 
-Written in vanilla JavaScript, it has 0 dependancies, so you should be able to use it in combination with any library and/or framework.
+## The *What*
 
-backend.js does not require any configurations, simply drop the script in and start mocking up some responses. 
-It works by hijacking the `XMLHttpRequest` constructor, allowing all requests to be intercepted and analyzed.
-If a request is made and a mocked response is found, backend.js simply serves up that response. 
-Alternatively, if no mocked response is found, then the real XHR object is called to allow your request to pass through.
+Based on AngularJS's $httpBackend, backend.js allows you to mock API responses 
+in the browser. Written in vanilla JavaScript, it has 0 dependancies, so you 
+should be able to use it in combination with any library and/or framework.
 
-### Examples
-To create a mocked response, simply access the `backend` object.
+backend.js does not require any configurations, simply drop the script in and 
+start mocking up some responses. It works by monkey patching the XMLHttpRequest 
+constructor, allowing all requests to be intercepted. If a request is made and a 
+mocked response is found, backend.js simply serves up that response. 
+Alternatively, if no mocked response is found, then the real XHR object is 
+called to allow your request to pass through.
+
+## The *Why*
+
+Original this project was started out of boredom! But then one day I found a need
+to stub responses in Web Workers, so I decided to revisit it and so it is.
+
+## Examples
+
+Stub a response!
 
 ```javascript
-backend.when('GET', '/users/:userid')
-  .respond({ 
-    name: 'Stephen' 
-  });
+backend.when('GET', '/api/users/:user').respond({
+  name: 'Jake',
+  species: 'Dog',
+  magicPowers: true,
+  location: 'Ooooo'
+});
 ```
-Then once you have your mocked response set, you simply use XHR per usual!
+
+Then use XHR per usual
+
 ```javascript
 var xhr = new XMLHttpRequest();
 
-xhr.open('GET', '/users/stephenplusplus');
-xhr.onreadystatechange = function() {
-  if (this.readyState == 4) {
-    var user = JSON.parse(this.responseText);
-    document.body.innerHTML += '<p>Hello, ' + user.name + '</p>'; 
+xhr.onreadystatechange = function () {
+  if (this.readyState === 4 && this.status === 200) {
+    var data = JSON.parse(xhr.responseText);
+    var msg = '<p>Hello, ' + data.name + ' the ' + data.species + '</p>';
+
+    document.body.innerHTML += msg;
   }
 };
+
+xhr.open('GET', '/api/users/jake');
 xhr.send();
 ```
-backend.js has been tested with jQuery and no changes are necessary for your code to play nicely!
+
+It also plays nicely with jQuery, so if VanillaJS isn't your thing, that's ok!
+
 ```javascript
-$.getJSON('/users/stephenpluplus', function(response) {
-  $('body').append('<p>Hello, ' + response.name + '</p>');
+$.getJSON('/api/users/jake', function (response) {
+  $('body').append('<p>Hello, ' + response.name + ' the ' + data.species + '</p>');
 });
 ```
-Looking for some alternative syntax? Well, it's your day, because backend.js is a rule breaker! (shoutout to [stephenplusplus](https://github.com/stephenplusplus/)!)
-```javascript
-'/users/:userid'.on('get')
-  .respond({
-    authId: 9999,
-    firstName: 'Jello',
-    lastName: 'Biafra'
-  });
-  
-'/things/:thing'.on('post', { thing: 'toast' })
-  .respond({
-    message: 'Toast is the perfect place for jelly to lay'
-  });
-```
+
+## License
+
+MIT license

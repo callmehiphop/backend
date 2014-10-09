@@ -1,5 +1,5 @@
 {
   "node": true,
-  "strict": true,
-  "laxbreak": true
+  "browser": true,
+  "expr": true
 }

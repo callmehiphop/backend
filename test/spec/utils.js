@@ -1,3 +1,0 @@
-var resetMocks = function() {
-  mocks = [];
-};
