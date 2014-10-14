@@ -66,4 +66,34 @@ describe('backend with vanillajs', function() {
     expect(response).not.to.exist;
   });
 
+  it('should serve up mock data when params match', function () {
+    var xhr = new XMLHttpRequest();
+
+    backend.when('GET', 'fixtures/data.json', { reno: '911' }).respond({
+      deputy: 'clementine'
+    });
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.send({ reno: '911' });
+
+    expect(JSON.parse(xhr.responseText)).to.eql({
+      deputy: 'clementine'
+    });
+  });
+
+  it('should not serve up mock data when params do not match', function () {
+    var xhr = new XMLHttpRequest();
+
+    backend.when('GET', 'fixtures/data.json', { yes: true }).respond({
+      test: 'bye'
+    });
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.send({ yes: false });
+
+    expect(JSON.parse(xhr.responseText)).to.eql({
+      test: 'hi'
+    });
+  });
+
 });
