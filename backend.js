@@ -2109,7 +2109,7 @@ Mock.prototype.match = function match (method, url, data, headers) {
     if (this.method === method.toUpperCase()) {
       // can't do equals(), as jQuery will add extra headers
       if (!this.headers || _.contains(headers, this.headers)) {
-        if (_.isEqual(this.data, data)) {
+        if (!this.data || _.isEqual(this.data, data)) {
           return true;
         }
       }
