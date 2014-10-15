@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "devDependencies": {
     "gulp": "^3.8.8",
     "browserify": "^6.0.3",
@@ -16,5 +16,8 @@
     "karma-spec-reporter": "0.0.13",
     "gulp-jshint": "^1.8.5",
     "jshint-stylish": "^1.0.0"
+  },
+  "dependencies": {
+    "glob-to-regexp": "0.0.1"
   }
 }

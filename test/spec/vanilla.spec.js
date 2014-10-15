@@ -96,4 +96,19 @@ describe('backend with vanillajs', function() {
     });
   });
 
+  it('should allow for globs', function () {
+    var xhr = new XMLHttpRequest();
+
+    backend.when('GET', 'fixtures/*.json').respond({
+      ding: 'dong'
+    });
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.send();
+
+    expect(JSON.parse(xhr.responseText)).to.eql({
+      ding: 'dong'
+    });
+  });
+
 });

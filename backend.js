@@ -2079,6 +2079,7 @@ backend.clear = function () {
 'use strict';
 
 var _ = require('./lodash.custom');
+var globToRegExp = require('glob-to-regexp');
 
 /**
  * Creates a new Mock object, used to return the desired response
@@ -2090,7 +2091,7 @@ var _ = require('./lodash.custom');
  */
 var Mock = module.exports = function Mock (method, url, data, headers) {
   this.method = method.toUpperCase();
-  this.url = url instanceof RegExp ? url : routeToRegExp(url);
+  this.url = url instanceof RegExp ? url : globToRegExp(url);
   this.data = data;
   this.headers = headers;
 };
@@ -2119,32 +2120,7 @@ Mock.prototype.match = function match (method, url, data, headers) {
   return false;
 };
 
-/**
- * Route Stuff! (All stolen from Backbone!)
- */
-var optionalParam = /\((.*?)\)/g;
-var namedParam = /(\(\?)?:\w+/g;
-var splatParam = /\*\w+/g;
-var escapeRegExp = /[\-{}\[\]+?.,\\\^$|#\s]/g;
-
-/**
- * Converts a dynamic URL string into a Regular Expression
- * e.g. '/posts/:postId/author' becomes /^/posts/([^/]+)/author$/
- * @param {string} route
- * @return {regexp} route
- */
-function routeToRegExp (route) {
-  route = route.replace(escapeRegExp, '\\$&').
-    replace(optionalParam, '(?:$1)?').
-    replace(namedParam, function(match, optional) {
-      return optional ? match : '([^\/]+)';
-    }).
-    replace(splatParam, '(.*?)');
-
-  return new RegExp('^' + route + '$');
-}
-
-},{"./lodash.custom":2}],4:[function(require,module,exports){
+},{"./lodash.custom":2,"glob-to-regexp":7}],4:[function(require,module,exports){
 'use strict';
 
 var _ = require('./lodash.custom');
@@ -2393,5 +2369,91 @@ var Response = module.exports = function (status, data, headers) {
   this.data = data;
   this.headers = headers;
 };
-},{"./lodash.custom":2}]},{},[1])(1)
+},{"./lodash.custom":2}],7:[function(require,module,exports){
+module.exports = function (glob, opts) {
+  if (glob == null) {
+    return null;
+  }
+
+  var str = String(glob);
+
+  // The regexp we are building, as a string.
+  var reStr = "";
+
+  // Whether we are matching so called "extended" globs (like bash) and should
+  // support single character matching, matching ranges of characters, group
+  // matching, etc.
+  var extended = opts ? !!opts.extended : false;
+
+  // If we are doing extended matching, this boolean is true when we are inside
+  // a group (eg {*.html,*.js}), and false otherwise.
+  var inGroup = false;
+
+  var c;
+  for (var i = 0, len = str.length; i < len; i++) {
+    c = str[i];
+
+    switch (c) {
+    case "\\":
+    case "/":
+    case "$":
+    case "^":
+    case "+":
+    case ".":
+    case "(":
+    case ")":
+    case "=":
+    case "!":
+    case "|":
+      reStr += "\\" + c;
+      break;
+
+    case "?":
+      if (extended) {
+        reStr += ".";
+	    break;
+      }
+
+    case "[":
+    case "]":
+      if (extended) {
+        reStr += c;
+	    break;
+      }
+
+    case "{":
+      if (extended) {
+        inGroup = true;
+	    reStr += "(";
+	    break;
+      }
+
+    case "}":
+      if (extended) {
+        inGroup = false;
+	    reStr += ")";
+	    break;
+      }
+
+    case ",":
+      if (inGroup) {
+        reStr += "|";
+	    break;
+      }
+      reStr += "\\" + c;
+      break;
+
+    case "*":
+      reStr += ".*";
+      break;
+
+    default:
+      reStr += c;
+    }
+  }
+
+  return new RegExp("^" + reStr + "$");
+};
+
+},{}]},{},[1])(1)
 });

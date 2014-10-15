@@ -25,7 +25,8 @@ to stub responses in Web Workers, so I decided to revisit it and so it is.
 Stub a response!
 
 ```javascript
-backend.when('GET', '/api/users/:user').respond({
+// supports globbing patterns!
+backend.when('GET', '/api/users/*').respond({
   name: 'Jake',
   species: 'Dog',
   magicPowers: true,
