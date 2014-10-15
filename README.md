@@ -4,25 +4,25 @@
 
 ## The *What*
 
-Based on AngularJS's $httpBackend, backend.js allows you to mock API responses 
-in the browser. Written in vanilla JavaScript, it has 0 dependancies, so you 
+Based on AngularJS's $httpBackend, backend.js allows you to mock API responses
+in the browser. Written in vanilla JavaScript, it has 0 dependencies, so you
 should be able to use it in combination with any library and/or framework.
 
-backend.js does not require any configurations, simply drop the script in and 
-start mocking up some responses. It works by monkey patching the XMLHttpRequest 
-constructor, allowing all requests to be intercepted. If a request is made and a 
-mocked response is found, backend.js simply serves up that response. 
-Alternatively, if no mocked response is found, then the real XHR object is 
+backend.js does not require any configurations. Simply drop the script in and
+start mocking up some responses. It works by monkey patching the XMLHttpRequest
+constructor, allowing all requests to be intercepted. If a request is made and a
+mocked response is found, backend.js simply serves up that response.
+Alternatively, if no mocked response is found, then the real XHR object is
 called to allow your request to pass through.
 
 ## The *Why*
 
-Original this project was started out of boredom! But then one day I found a need
+Originally, this project was started out of boredom! Then one day I found a need
 to stub responses in Web Workers, so I decided to revisit it and so it is.
 
 ## Examples
 
-Stub a response!
+Stub a response:
 
 ```javascript
 // supports globbing patterns!
@@ -34,7 +34,7 @@ backend.when('GET', '/api/users/*').respond({
 });
 ```
 
-Then use XHR per usual
+Then use XHR per usual:
 
 ```javascript
 var xhr = new XMLHttpRequest();
