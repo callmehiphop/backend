@@ -56,7 +56,7 @@ It also plays nicely with jQuery, so if VanillaJS isn't your thing, that's ok!
 
 ```javascript
 $.getJSON('/api/users/jake', function (response) {
-  $('body').append('<p>Hello, ' + response.name + ' the ' + data.species + '</p>');
+  $('body').append('<p>Hello, ' + response.name + ' the ' + response.species + '</p>');
 });
 ```
 
