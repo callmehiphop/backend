@@ -2325,7 +2325,7 @@ var Request = module.exports = function () {
   this.getResponseHeader = function (key) {
     if (!mock) return request.getResponseHeader();
 
-    return mock.headers[key];
+    return mock.response.headers[key];
   };
 
   /**
