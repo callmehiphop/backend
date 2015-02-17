@@ -16,10 +16,15 @@ global.XMLHttpRequest = require('./lib/request');
  */
 backend.when = function (method, url, data, headers) {
   var mock = mocks.create(method, url, data, headers);
+  mock.options = {};
 
   return {
     respond: function (status, data, headers) {
       mock.response = new Response(status, data, headers);
+    },
+    options: function(options) {
+      mock.options = options;
+      return this;
     }
   };
 };
