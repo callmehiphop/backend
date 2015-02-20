@@ -66,6 +66,34 @@ describe('backend with vanillajs', function() {
     expect(response).not.to.exist;
   });
 
+  it('should be able to delay the xhr call', function (done) {
+    var startTime = new Date().getTime();
+    var xhr = new XMLHttpRequest();
+    var response;
+
+    backend
+    .when('GET', 'fixtures/data.json')
+    .options({
+      delay: 1000
+    })
+    .respond({
+      test: 'oh my glob'
+    });
+
+    xhr.onreadystatechange = function () {
+      response = JSON.parse(xhr.responseText);
+      response.should.be.a('object');
+      response.test.should.equal('oh my glob');
+      expect(new Date().getTime() - startTime).to.be.above(1000);
+      done();
+    };
+
+    xhr.open('GET', 'fixtures/data.json', true);
+    xhr.send();
+
+    expect(response).not.to.exist;
+  });
+
   it('should serve up mock data when params match', function () {
     var xhr = new XMLHttpRequest();
 
