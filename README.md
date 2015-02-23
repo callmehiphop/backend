@@ -60,6 +60,22 @@ $.getJSON('/api/users/jake', function (response) {
 });
 ```
 
+Async requests are delay by default for 100ms however you can specific a different value if you need:
+
+```javascript
+backend
+.when('GET', '/api/users/*')
+.options({
+  delay: 2000
+})
+.respond({
+  name: 'Jake',
+  species: 'Dog',
+  magicPowers: true,
+  location: 'Ooooo'
+});
+```
+
 ## License
 
 MIT license
