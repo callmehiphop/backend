@@ -74,7 +74,7 @@ describe('backend with vanillajs', function() {
     backend
     .when('GET', 'fixtures/data.json')
     .options({
-      delay: 1000
+      delay: 1100
     })
     .respond({
       test: 'oh my glob'
