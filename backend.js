@@ -18,10 +18,15 @@ global.XMLHttpRequest = require('./lib/request');
  */
 backend.when = function (method, url, data, headers) {
   var mock = mocks.create(method, url, data, headers);
+  mock.options = {};
 
   return {
     respond: function (status, data, headers) {
       mock.response = new Response(status, data, headers);
+    },
+    options: function(options) {
+      mock.options = options;
+      return this;
     }
   };
 };
@@ -2268,7 +2273,7 @@ var Request = module.exports = function () {
       return resolve();
     }
 
-    timer = setTimeout(resolve, 100);
+    timer = setTimeout(resolve, mock.options.delay || 100);
   }
 
   /**
@@ -2369,6 +2374,7 @@ var Response = module.exports = function (status, data, headers) {
   this.data = data;
   this.headers = headers;
 };
+
 },{"./lodash.custom":2}],7:[function(require,module,exports){
 module.exports = function (glob, opts) {
   if (glob == null) {
