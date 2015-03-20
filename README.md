@@ -20,6 +20,30 @@ called to allow your request to pass through.
 Originally, this project was started out of boredom! Then one day I found a need
 to stub responses in Web Workers, so I decided to revisit it and so it is.
 
+## Installation
+
+### NPM
+
+```
+npm install mocked-backend
+```
+
+Then just require:
+
+```javascript
+var backend = require('mocked-backend');
+```
+
+**Note that this only works in the browser (using something like browserify)**
+
+### Bower
+
+```
+bower install backend
+```
+
+You just need to include the `backend.js` file that comes with the bower install.
+
 ## Examples
 
 Stub a response:

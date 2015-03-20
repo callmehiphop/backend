@@ -1,6 +1,7 @@
 {
-  "name": "backend",
+  "name": "mocked-backend",
   "version": "0.2.2",
+  "main": "./index.js",
   "devDependencies": {
     "gulp": "^3.8.8",
     "browserify": "^6.0.3",
