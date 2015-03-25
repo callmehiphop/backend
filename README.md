@@ -28,18 +28,19 @@ to stub responses in Web Workers, so I decided to revisit it and so it is.
 $ npm install --save-dev mocked-backend
 ```
 
-Then just require:
+Then just require it!
 
 ```javascript
 var backend = require('mocked-backend');
 ```
 
-**Note that this only works in the browser (using something like browserify)**
+**Note:** backend is only intended to be used within a browser, an npm option
+is available for things like browserify
 
-### Bower
+### bower
 
 ```sh
-$ bower install backend
+$ bower install --save-dev backend
 ```
 
 You just need to include the `backend.js` file that comes with the bower install.
@@ -88,16 +89,16 @@ Async requests are delay by default for 100ms however you can specific a differe
 
 ```javascript
 backend
-.when('GET', '/api/users/*')
-.options({
-  delay: 2000
-})
-.respond({
-  name: 'Jake',
-  species: 'Dog',
-  magicPowers: true,
-  location: 'Ooooo'
-});
+  .when('GET', '/api/users/*')
+  .options({
+    delay: 2000
+  })
+  .respond({
+    name: 'Jake',
+    species: 'Dog',
+    magicPowers: true,
+    location: 'Ooooo'
+  });
 ```
 
 ## License
