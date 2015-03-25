@@ -22,10 +22,10 @@ to stub responses in Web Workers, so I decided to revisit it and so it is.
 
 ## Installation
 
-### NPM
+### npm
 
-```
-npm install mocked-backend
+```sh
+$ npm install --save-dev mocked-backend
 ```
 
 Then just require:
@@ -38,8 +38,8 @@ var backend = require('mocked-backend');
 
 ### Bower
 
-```
-bower install backend
+```sh
+$ bower install backend
 ```
 
 You just need to include the `backend.js` file that comes with the bower install.
