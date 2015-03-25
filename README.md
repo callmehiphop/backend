@@ -24,8 +24,8 @@ to stub responses in Web Workers, so I decided to revisit it and so it is.
 
 ### npm
 
-```
-$ npm install mocked-backend
+```sh
+$ npm install --save-dev mocked-backend
 ```
 
 Then just require it!
@@ -39,8 +39,8 @@ is available for things like browserify
 
 ### bower
 
-```
-$ bower install backend
+```sh
+$ bower install --save-dev backend
 ```
 
 You just need to include the `backend.js` file that comes with the bower install.
