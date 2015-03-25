@@ -1,7 +1,11 @@
 {
   "name": "mocked-backend",
-  "version": "0.2.2",
-  "main": "./index.js",
+  "version": "0.2.3",
+  "description": "Mock network request responses in the browser",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "devDependencies": {
     "gulp": "^3.8.8",
     "browserify": "^6.0.3",
@@ -20,5 +24,22 @@
   },
   "dependencies": {
     "glob-to-regexp": "0.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/callmehiphop/backend.git"
+  },
+  "keywords": [
+    "mock",
+    "http",
+    "backend",
+    "xhr",
+    "stub"
+  ],
+  "author": "David Gramlich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/callmehiphop/backend/issues"
+  },
+  "homepage": "https://github.com/callmehiphop/backend"
 }
