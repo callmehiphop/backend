@@ -1,0 +1,10 @@
+test/*
+.bowerrc
+.editorconfig
+.gitignore
+.jshintrc
+.npmignore
+backend.js
+bower.json
+gulpfile.js
+karma.conf.js
