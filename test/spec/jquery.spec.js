@@ -26,6 +26,48 @@ describe('backend + jQuery', function () {
     });
   });
 
+  it('should hit an end point when a stub does exist but headers do not match', function (done) {
+    backend.when('GET', 'fixtures/data.json', undefined, {
+      'X-test': 'correct'
+    }).respond({
+      test: 'I AM THE MACHO MAN!'
+    });
+
+    $.ajax({
+      dataType: "json",
+      url: 'fixtures/data.json',
+      headers: {
+        'X-test': 'wrong'
+      },
+      success: function (response) {
+        response.should.be.a('object');
+        response.test.should.equal('hi');
+        done();
+      }
+    });
+  });
+
+  it('should serve up a stub when a stub exists and headers match', function (done) {
+    backend.when('GET', 'fixtures/data.json', undefined, {
+      'X-test': 'correct'
+    }).respond({
+      test: 'I AM THE MACHO MAN!'
+    });
+
+    $.ajax({
+      dataType: "json",
+      url: 'fixtures/data.json',
+      headers: {
+        'X-test': 'correct'
+      },
+      success: function (response) {
+        response.should.be.a('object');
+        response.test.should.equal('I AM THE MACHO MAN!');
+        done();
+      }
+    });
+  });
+
   it('should handle failed requests', function (done) {
     backend.when('GET', 'fixtures/*.json').respond(500, {
       error: 'nope nope nope!'
