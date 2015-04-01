@@ -45,6 +45,54 @@ describe('backend with vanillajs', function() {
     response.test.should.equal('toast is the perfect place for jelly to lay');
   });
 
+  it('should attempt to hit end point when mock exist but does not match headers', function() {
+    var xhr = new XMLHttpRequest();
+    var response;
+
+    backend.when('GET', 'fixtures/data.json', undefined, {
+      'X-test': 'correct'
+    }).respond({
+      test: 'toast is the perfect place for jelly to lay'
+    });
+
+    xhr.onreadystatechange = function() {
+      response = xhr.response;
+    };
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.setRequestHeader('X-test', 'wrong');
+    xhr.send();
+
+    response.should.be.a('string');
+    response = JSON.parse(response);
+    response.should.be.a('object');
+    response.test.should.equal('hi');
+  });
+
+  it('should serve up mock data when headers do match', function() {
+    var xhr = new XMLHttpRequest();
+    var response;
+
+    backend.when('GET', 'fixtures/data.json', undefined, {
+      'X-test': 'correct'
+    }).respond({
+      test: 'toast is the perfect place for jelly to lay'
+    });
+
+    xhr.onreadystatechange = function() {
+      response = xhr.response;
+    };
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.setRequestHeader('X-test', 'correct');
+    xhr.send();
+
+    response.should.be.a('string');
+    response = JSON.parse(response);
+    response.should.be.a('object');
+    response.test.should.equal('toast is the perfect place for jelly to lay');
+  });
+
   it('should handle async requests in an async fashion', function (done) {
     var xhr = new XMLHttpRequest();
     var response;
