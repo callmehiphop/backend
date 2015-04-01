@@ -1,7 +1,29 @@
 {
   "name": "backend",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "devDependencies": {
     "jquery": "~2.1.1"
-  }
+  },
+  "main": "backend.js",
+  "homepage": "https://github.com/callmehiphop/backend",
+  "authors": [
+    "Dave Gramlich <callmehiphop@gmail.com>"
+  ],
+  "description": "Mock network request responses in the browser",
+  "keywords": [
+    "mock",
+    "http",
+    "backend",
+    "xhr",
+    "stub"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test/bower_components",
+    "test",
+    "tests"
+  ]
 }
