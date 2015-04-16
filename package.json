@@ -1,8 +1,8 @@
 {
   "name": "mocked-backend",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Mock network request responses in the browser",
-  "main": ["index.js"],
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
