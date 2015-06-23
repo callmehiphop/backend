@@ -187,4 +187,19 @@ describe('backend with vanillajs', function() {
     });
   });
 
+  it('should accept functions within .respond() for dynamic responses', function () {
+    var xhr = new XMLHttpRequest();
+
+    backend.when('GET', 'fixtures/*.json').respond(function () {
+      return { ohh: 'yeah' };
+    });
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.send();
+
+    expect(JSON.parse(xhr.responseText)).to.eql({
+      ohh: 'yeah'
+    });
+  });
+
 });
