@@ -19,7 +19,7 @@ module.exports = function (karma) {
     ],
 
     files: [
-      'test/bower_components/jquery/dist/jquery.js',
+      'node_modules/jquery/dist/jquery.js',
       'test/spec/*.spec.js',
       {
         pattern: 'test/fixtures/*',
