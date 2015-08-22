@@ -2,6 +2,8 @@
 
 > No API? No problem!
 
+[![Travis Build Status](https://travis-ci.org/callmehiphop/backend.svg?branch=master)](https://travis-ci.org/callmehiphop/backend)
+
 ## The *What*
 
 Based on AngularJS's $httpBackend, backend.js allows you to mock API responses
