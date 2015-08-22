@@ -3480,7 +3480,7 @@ backend.clear = function () {
 },{}],3:[function(require,module,exports){
 'use strict';
 
-var _ = require('./lodash.custom');
+var _ = require('./dash');
 var globToRegExp = require('glob-to-regexp');
 
 /**
@@ -3529,10 +3529,10 @@ Mock.prototype.match = function match (method, url, data, headers) {
   return false;
 };
 
-},{"./lodash.custom":2,"glob-to-regexp":7}],4:[function(require,module,exports){
+},{"./dash":2,"glob-to-regexp":7}],4:[function(require,module,exports){
 'use strict';
 
-var _ = require('./lodash.custom');
+var _ = require('./dash');
 var Mock = require('./mock');
 var stubs = [];
 var mocks = module.exports = {};
@@ -3576,11 +3576,11 @@ mocks.match = function (method, url, params, headers) {
   return match;
 };
 
-},{"./lodash.custom":2,"./mock":3}],5:[function(require,module,exports){
+},{"./dash":2,"./mock":3}],5:[function(require,module,exports){
 (function (global){
 'use strict';
 
-var _ = require('./lodash.custom');
+var _ = require('./dash');
 var mocks = require('./mocks');
 var HttpRequest = global.XMLHttpRequest;
 
@@ -3757,10 +3757,10 @@ var Request = module.exports = function () {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lodash.custom":2,"./mocks":4}],6:[function(require,module,exports){
+},{"./dash":2,"./mocks":4}],6:[function(require,module,exports){
 'use strict';
 
-var _ = require('./lodash.custom');
+var _ = require('./dash');
 
 /**
  * Checks to see if a status code was provided, otherwise defaults
@@ -3779,7 +3779,7 @@ var Response = module.exports = function (status, data, headers) {
   this.headers = headers;
 };
 
-},{"./lodash.custom":2}],7:[function(require,module,exports){
+},{"./dash":2}],7:[function(require,module,exports){
 module.exports = function (glob, opts) {
   if (glob == null) {
     return null;
