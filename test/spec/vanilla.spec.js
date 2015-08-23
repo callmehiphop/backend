@@ -7,21 +7,17 @@ describe('backend with vanillajs', function() {
     backend.clear();
   });
 
-  it('should attempt to hit end point when mock does not exist', function() {
+  it('should throw an error when no mock has been defined for a request', function() {
     var xhr = new XMLHttpRequest();
-    var response;
 
-    xhr.onreadystatechange = function() {
-      response = xhr.response;
-    };
+    xhr.open('POST', 'api/login', false);
 
-    xhr.open('GET', 'fixtures/data.json', false);
-    xhr.send();
-
-    response.should.be.a('string');
-    response = JSON.parse(response);
-    response.should.be.a('object');
-    response.test.should.equal('hi');
+    try {
+      xhr.send({ username: 'bob', password: 'open-seasame' });
+    } catch (e) {
+      e.should.be.instanceof(Error);
+      e.message.should.equal('Unexpected request: POST api/login\n{"username":"bob","password":"open-seasame"}');
+    }
   });
 
   it('should serve up mock data when defined', function() {
@@ -45,7 +41,7 @@ describe('backend with vanillajs', function() {
     response.test.should.equal('toast is the perfect place for jelly to lay');
   });
 
-  it('should attempt to hit end point when mock exist but does not match headers', function() {
+  it('should throw an error when mock exists but does not match headers', function() {
     var xhr = new XMLHttpRequest();
     var response;
 
@@ -55,18 +51,15 @@ describe('backend with vanillajs', function() {
       test: 'toast is the perfect place for jelly to lay'
     });
 
-    xhr.onreadystatechange = function() {
-      response = xhr.response;
-    };
-
     xhr.open('GET', 'fixtures/data.json', false);
     xhr.setRequestHeader('X-test', 'wrong');
-    xhr.send();
 
-    response.should.be.a('string');
-    response = JSON.parse(response);
-    response.should.be.a('object');
-    response.test.should.equal('hi');
+    try {
+      xhr.send();
+    } catch (e) {
+      e.should.be.instanceof(Error);
+      e.message.should.equal('Unexpected request: GET fixtures/data.json');
+    }
   });
 
   it('should serve up mock data when headers do match', function() {
@@ -91,6 +84,25 @@ describe('backend with vanillajs', function() {
     response = JSON.parse(response);
     response.should.be.a('object');
     response.test.should.equal('toast is the perfect place for jelly to lay');
+  });
+
+  it('should passthrough to a real request when explicitly opted in', function() {
+    var xhr = new XMLHttpRequest();
+    var response;
+
+    backend.when('GET', 'fixtures/data.json').passthrough();
+
+    xhr.onreadystatechange = function() {
+      response = xhr.response;
+    };
+
+    xhr.open('GET', 'fixtures/data.json', false);
+    xhr.send();
+
+    response.should.be.a('string');
+    response = JSON.parse(response);
+    response.should.be.a('object');
+    response.test.should.equal('hi');
   });
 
   it('should handle async requests in an async fashion', function (done) {
@@ -160,16 +172,17 @@ describe('backend with vanillajs', function() {
   it('should not serve up mock data when params do not match', function () {
     var xhr = new XMLHttpRequest();
 
-    backend.when('GET', 'fixtures/data.json', { yes: true }).respond({
+    backend.when('POST', 'api/theanswer', { yes: true }).respond({
       test: 'bye'
     });
 
-    xhr.open('GET', 'fixtures/data.json', false);
-    xhr.send({ yes: false });
+    xhr.open('POST', 'api/theanswer', false);
 
-    expect(JSON.parse(xhr.responseText)).to.eql({
-      test: 'hi'
-    });
+    try {
+      xhr.send({ yes: false });
+    } catch (e) {
+      e.message.should.equal('Unexpected request: POST api/theanswer\n{"yes":false}');
+    }
   });
 
   it('should allow for globs', function () {

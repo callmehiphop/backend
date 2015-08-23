@@ -7,9 +7,10 @@ describe('backend + jQuery', function () {
   });
 
   it('should hit an end point when a stub does not exist', function (done) {
-    $.getJSON('fixtures/data.json', function (response) {
-      response.should.be.a('object');
-      response.test.should.equal('hi');
+    $.getJSON('fixtures/data.json').then(function (response) {
+      done(new Error('request should have not succeeded but it did'));
+    }, function(_, __, error) {
+      error.message.should.equal('Unexpected request: GET fixtures/data.json');
       done();
     });
   });
@@ -40,8 +41,10 @@ describe('backend + jQuery', function () {
         'X-test': 'wrong'
       },
       success: function (response) {
-        response.should.be.a('object');
-        response.test.should.equal('hi');
+        done(new Error('request should have not succeeded but it did'));
+      },
+      error: function(_, __, error) {
+        error.message.should.equal('Unexpected request: GET fixtures/data.json');
         done();
       }
     });
