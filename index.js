@@ -48,7 +48,7 @@ backend.when = _.bind(when, backend, false);
 backend.expect = _.bind(when, backend, true);
 
 _.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], function(method) {
-  backend['expect' + method] = _.bind(when, backend, false, method);
+  backend['expect' + method] = _.bind(when, backend, true, method);
 });
 
 
