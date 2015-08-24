@@ -6,7 +6,7 @@
 
 ## The *What*
 
-Based on AngularJS's $httpBackend, backend.js allows you to mock API responses
+Based on AngularJS's [$httpBackend](https://docs.angularjs.org/api/ngMock/service/$httpBackend), backend.js allows you to mock API responses
 in the browser. Written in vanilla JavaScript, it has 0 dependencies, so you
 should be able to use it in combination with any library and/or framework.
 
@@ -36,7 +36,7 @@ Then just require it!
 var backend = require('mocked-backend');
 ```
 
-**Note:** backend is only intended to be used within a browser, an npm option
+**Note:** backend is only intended to be used within a browser, a CJS module format
 is available for things like browserify
 
 ### bower
@@ -61,30 +61,36 @@ backend.when('GET', '/api/users/*').respond({
 });
 ```
 
-Then use XHR per usual:
-
-```javascript
-var xhr = new XMLHttpRequest();
-
-xhr.onreadystatechange = function () {
-  if (this.readyState === 4 && this.status === 200) {
-    var data = JSON.parse(xhr.responseText);
-    var msg = '<p>Hello, ' + data.name + ' the ' + data.species + '</p>';
-
-    document.body.innerHTML += msg;
-  }
-};
-
-xhr.open('GET', '/api/users/jake');
-xhr.send();
-```
-
-It also plays nicely with jQuery, so if VanillaJS isn't your thing, that's ok!
+Then use XHR or any AJAX library you wish to do your tests (jQuery with [chai](http://chaijs.com/) should assertions below):
 
 ```javascript
 $.getJSON('/api/users/jake', function (response) {
-  $('body').append('<p>Hello, ' + response.name + ' the ' + response.species + '</p>');
+  response.name.should.equal('Jake');
+  response.species.should.equal('Dog');
 });
+```
+
+Declare ajax calls you expect in your test and verify they are called ([mocha](https://mochajs.org/) and jQuery shown below):
+
+```javascript
+beforeEach(function() {
+  backend.expectPOST('/signup', {
+    username: 'Bob',
+    email: 'bob@gmail.com',
+    password: 'password'
+  }).respond(200, { userId: 3 })
+})
+
+afterEach(function() {
+  backend.verifyNoOutstandingExpectation()
+})
+
+it('should send a post to /signup when the form is filled out and completed', function() {
+  $('form.signup [name="username"]').val('Bob');
+  $('form.signup [name="email"]').val('bob@gmail.com');
+  $('form.signup [name="password"]').val('password');
+  $('form.signup [type="submit"]').click();
+})
 ```
 
 Async requests are delay by default for 100ms however you can specific a different value if you need:
