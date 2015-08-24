@@ -93,7 +93,13 @@ it('should send a post to /signup when the form is filled out and completed', fu
 })
 ```
 
-Async requests are delay by default for 100ms however you can specific a different value if you need:
+Async requests are not delayed by default. However, you can specific a different value if you need:
+
+```
+backend.defaults.delay = 100;
+```
+
+and also provide per-stub delay value:
 
 ```javascript
 backend
