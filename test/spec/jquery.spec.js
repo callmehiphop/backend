@@ -6,7 +6,7 @@ describe('backend + jQuery', function () {
     backend.clear();
   });
 
-  it('should hit an end point when a stub does not exist', function (done) {
+  it('should fail when a stub does not exist', function (done) {
     $.getJSON('fixtures/data.json').then(function (response) {
       done(new Error('request should have not succeeded but it did'));
     }, function(_, __, error) {

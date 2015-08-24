@@ -17,7 +17,7 @@ function when (expected, method, url, data, headers) {
       mock.response = new Response(status, data, headers);
     },
     passthrough: function() {
-      mock.response = 'passthrough';
+      mock.passthrough = true;
     },
     options: function(options) {
       mock.options = options;
