@@ -17,7 +17,9 @@ describe('backend with vanillajs', function() {
     } catch (e) {
       e.should.be.instanceof(Error);
       e.message.should.equal('Unexpected request: POST api/login\n{"username":"bob","password":"open-seasame"}');
+      return;
     }
+    throw new Error('no error was thrown from send()');
   });
 
   it('should serve up mock data when defined', function() {
@@ -59,7 +61,9 @@ describe('backend with vanillajs', function() {
     } catch (e) {
       e.should.be.instanceof(Error);
       e.message.should.equal('Unexpected request: GET fixtures/data.json');
+      return;
     }
+    throw new Error('no error was thrown from send()');
   });
 
   it('should serve up mock data when headers do match', function() {
@@ -182,7 +186,9 @@ describe('backend with vanillajs', function() {
       xhr.send({ yes: false });
     } catch (e) {
       e.message.should.equal('Unexpected request: POST api/theanswer\n{"yes":false}');
+      return;
     }
+    throw new Error('no error was thrown from send()');
   });
 
   it('should allow for globs', function () {
