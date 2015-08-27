@@ -58,7 +58,8 @@ _.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], function(method) {
 backend.verifyNoOutstandingExpectation = function() {
   var expected = mocks.outstandingExpected();
   if (expected.length) {
-    throw new Error('Expected no outstanding expectations, but there were ' + expected.length + '\n' + expected[0].toString());
+    throw new Error('Expected no outstanding expectations, but there were ' +
+      expected.length + '\n' + expected[0].toString());
   }
 };
 
@@ -68,7 +69,8 @@ backend.verifyNoOutstandingExpectation = function() {
 backend.verifyNoOutstandingRequest = function() {
   var inFlight = pending.outstanding();
   if (inFlight.length) {
-    throw new Error('Expected no outstanding requests, but there were ' + inFlight.length + '\n' + inFlight[0].toString());
+    throw new Error('Expected no outstanding requests, but there were ' +
+      inFlight.length + '\n' + inFlight[0].toString());
   }
 };
 
