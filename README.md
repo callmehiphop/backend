@@ -109,6 +109,8 @@ backend
   });
 ```
 
+You can also call `backend.flush` to syncrounously resolve any pending requests, and `verifyNoOutstandingRequest` to assert there are no requests in flight.
+
 ## License
 
 MIT license

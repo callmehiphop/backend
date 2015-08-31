@@ -2,6 +2,7 @@
 
 var Response = require('./lib/response');
 var mocks = require('./lib/mocks');
+var pending = require('./lib/pending');
 var _ = require('./lib/dash');
 var backend = module.exports = {};
 
@@ -51,18 +52,39 @@ _.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], function(method) {
   backend['expect' + method] = _.bind(when, backend, true, method);
 });
 
-
+/**
+ * Assert that all expected requests have been requested.
+ */
 backend.verifyNoOutstandingExpectation = function() {
-  var expected = mocks.outstandingExpected(mocks);
+  var expected = mocks.outstandingExpected();
   if (expected.length) {
-    throw new Error('Expected no outstanding expectations, but there were ' + expected.length + '\n' + expected[0].toString());
+    throw new Error('Expected no outstanding expectations, but there were ' +
+      expected.length + '\n' + expected[0].toString());
   }
 };
 
+/**
+ * Assert that there are no stubbed requests that are not resolved yet.
+ */
+backend.verifyNoOutstandingRequest = function() {
+  var inFlight = pending.outstanding();
+  if (inFlight.length) {
+    throw new Error('Expected no outstanding requests, but there were ' +
+      inFlight.length + '\n' + inFlight[0].toString());
+  }
+};
 
 /**
- * Clears out any stubbed requests
+ * Resolves any pending requests syncrounously
+ */
+backend.flush = function () {
+  pending.flush();
+};
+
+/**
+ * Clears out any stubbed and pending requests
  */
 backend.clear = function () {
   mocks.clear();
+  pending.clear();
 };
