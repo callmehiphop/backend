@@ -1,6 +1,6 @@
 {
   "name": "mocked-backend",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Mock network request responses in the browser",
   "directories": {
     "test": "test"
