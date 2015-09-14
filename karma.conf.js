@@ -9,7 +9,7 @@ module.exports = function (karma) {
     logLevel: karma.LOG_ERROR,
 
     reporters: ['spec'],
-    browsers: ['UnsafePhantomJS'],
+    browsers: [process.env.TRAVIS ? 'Firefox' : 'PhantomJS'],
     plugins: ['karma-*'],
 
     frameworks: [
@@ -38,17 +38,6 @@ module.exports = function (karma) {
 
     browserify: {
       transform: ['brfs']
-    },
-
-    customLaunchers: {
-      UnsafePhantomJS: {
-        base: 'PhantomJS',
-        options: {
-          settings: {
-            webSecurityEnabled: false
-          }
-        }
-      }
     }
 
   });

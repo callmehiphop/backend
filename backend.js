@@ -354,9 +354,18 @@ var Request = module.exports = function () {
    * @param {*} params
    */
   function sendRealRequest (params) {
+    var resolve = fakeRequest.onreadystatechange || fakeRequest.onload || function() {};
+    delete fakeRequest.onreadystatechange;
+    delete fakeRequest.onload;
+
     request.addEventListener('readystatechange', function () {
       if (request.readyState !== 4) return;
-      _.extend(fakeRequest, _.pick(request, requestHasProp));
+      fakeRequest.readyState = 4;
+      fakeRequest.status = request.status;
+      fakeRequest.response = request.response;
+      fakeRequest.responseText = request.responseText;
+      _.extend(fakeRequest, request);
+      resolve();
     });
 
     _.extend(request, _.pick(fakeRequest, requestHasProp));
